@@ -1,3 +1,5 @@
+
+
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { FeedPost } from '@/types/social'
 
@@ -21,17 +23,16 @@ type GetFeedPostsOptions = {
   authorId?: string
 }
 
-export async function getFeedPosts(options: GetFeedPostsOptions = {}) {
+export async function getFeedPosts({ authorId }: GetFeedPostsOptions) {
   const supabase = createAdminClient()
-  const { authorId } = options
 
-  let query = supabase
+  const query = supabase
     .from('posts')
     .select('id, author_id, content, image_url, created_at')
     .order('created_at', { ascending: false })
 
   if (authorId) {
-    query = query.eq('author_id', authorId)
+    query.eq('author_id', authorId)
   }
 
   const { data, error } = await query

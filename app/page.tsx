@@ -4,7 +4,8 @@ import { getFeedPosts } from '@/lib/feed'
 import type { FeedPost } from '@/types/social'
 
 export default async function Home() {
-  const posts: FeedPost[] = await getFeedPosts()
+  
+  const posts: FeedPost[] = await getFeedPosts({ authorId: undefined })
 
   return (
     <section className="w-full space-y-6">
@@ -24,8 +25,8 @@ export default async function Home() {
       </header>
 
    {posts.length ? (
-  /* Main Container: No height limit, no internal scroll */
-  <div className="w-full py-4">
+
+<div className="w-full py-4">
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post) => (
         /* Each card takes its own natural height */
